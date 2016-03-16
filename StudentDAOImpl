@@ -1,0 +1,75 @@
+package com.wanczy.oopDemo;
+
+public class StudentDAOImpl implements StudentDAO{
+	Student stu[] = new Student[100];
+	@Override
+	public void doDel(String oldStuNO) {
+		// TODO Auto-generated method stub
+		Student stuSerch = this.findByStuNO(oldStuNO);
+		if(null == stuSerch){
+			System.out.println("此学生不存在");
+			return;
+		}else{
+			int index = this.findIndexByStuNO(oldStuNO);//通过学号找下标
+			for(int i = index;i<stu.length-1;i++){
+				stu[i] = stu[i+1];
+			}
+			stu[stu.length-1] = null;
+			System.out.println("删除成功");
+		}
+	}
+
+	@Override
+	public void doIns(Student newStu) {
+		for (int i = 0; i < stu.length; i++) {
+			if(null == stu[i]){
+				stu[i] = newStu;
+				System.out.println("新增成功");
+				return;//结束方法运行
+			}
+		}
+		System.out.println("新增失败");
+		
+	}
+
+	@Override
+	public void doPrint() {
+		for (int i = 0; i < stu.length; i++) {
+			if(null != stu[i]){
+				System.out.println(stu[i].getStuNO()+"\t" + stu[i].getStuName() + "\t" + stu[i].getStuAge());
+			}
+		}
+		
+	}
+
+	@Override
+	public void doUpd(String oldStuNO, Student newStu) {
+		Student stuSerch = this.findByStuNO(oldStuNO);
+		if(null == stuSerch){
+			System.out.println("此学生不存在");
+			return;
+		}else{
+			int index = this.findIndexByStuNO(oldStuNO);//通过学号找下标
+			stu[index] = newStu;
+			System.out.println("修改成功");
+		}
+	}
+
+	@Override
+	public Student findByStuNO(String stuNO) {
+		for (int i = 0; i < stu.length; i++) {
+			if(null != stu[i] && stu[i].getStuNO().equals(stuNO)){
+				return stu[i];
+			}
+		}
+		return null;
+	}
+	public int findIndexByStuNO(String stuNO) {
+		for (int i = 0; i < stu.length; i++) {
+			if(null != stu[i] && stu[i].getStuNO().equals(stuNO)){
+				return i;
+			}
+		}
+		return -1;
+	}
+}
