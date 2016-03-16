@@ -1,0 +1,32 @@
+package com.wanczy.oopDemo;
+
+public interface StudentDAO {
+	/**
+	 * 新增
+	 * @param newStu
+	 */
+	public void doIns(Student newStu);
+	/**
+	 * 修改
+	 * @param oldStu
+	 * @param newStu
+	 */
+	public void doUpd(String oldStuNO,Student newStu);
+	/**
+	 * 删除
+	 * @param oldStu
+	 */
+	public void doDel(String oldStuNO);
+	/**
+	 * 通过学号学生
+	 * @param stuNO
+	 * @return
+	 */
+	public Student findByStuNO(String stuNO);
+	/**
+	 * 输出
+	 */
+	public void doPrint();
+	
+	
+}
