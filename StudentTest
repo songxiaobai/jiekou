@@ -1,0 +1,68 @@
+package com.wanczy.oopDemo;
+
+import java.util.Scanner;
+
+public class StudentTest {
+	public static void main(String[] args) {
+		StudentDAO dao = new StudentDAOImpl();
+		Scanner sc = new Scanner(System.in);
+		int flag = 0;
+		do{
+			System.out.println("输入1表示新增，输入2表示修改，输入3表示删除，输入4表示查询，输入5表示打印数组，输入0表示退出");
+			System.out.println("请输入操作号：");
+			flag = sc.nextInt();
+			switch (flag){
+			case 1:
+				System.out.println("请输入新增学生的学号：");
+				String insNewStuNO = sc.next();
+				System.out.println("请输入新增学生的姓名：");
+				String insNewStuName = sc.next();
+				System.out.println("请输入新增学生的年龄：");
+				int insNewStuAge = sc.nextInt();
+				Student insNewStu = new Student(insNewStuNO,insNewStuName,insNewStuAge);
+				dao.doIns(insNewStu);//进行新增操作
+				break;
+			case 2:
+				System.out.println("请输入修改前学生的学号：");
+				String updOldStuNO = sc.next();
+				Student stu = dao.findByStuNO(updOldStuNO);
+				if(null == stu){
+					System.out.println("查无此学生");
+				}else{
+					System.out.println("请输入修改后学生的学号：");
+					String updNewStuNO = sc.next();
+					System.out.println("请输入修改后学生的姓名：");
+					String updNewStuName = sc.next();
+					System.out.println("请输入修改后学生的年龄：");
+					int updNewStuAge = sc.nextInt();
+					Student updNewStu = new Student(updNewStuNO,updNewStuName,updNewStuAge);
+					dao.doUpd(updOldStuNO,updNewStu);//进行修改操作
+				}
+				break;
+			case 3:
+				System.out.println("请输入删除前学生的学号：");
+				String delOldStuNO = sc.next();
+				dao.doDel(delOldStuNO);//进行修改操作
+				break;
+			case 4:
+				System.out.println("请输入查找学生的学号：");
+				String serchStuNO = sc.next();
+				Student serchStu = dao.findByStuNO(serchStuNO);
+				if(null == serchStu){
+					System.out.println("查无此学生");
+				}else{
+					System.out.println("学号： " + serchStu.getStuNO() + "\t" + "姓名：" + serchStu.getStuName() + "\t" + "年龄：" + serchStu.getStuAge() );
+				}
+				break;
+			case 5:
+				dao.doPrint();
+				break;
+			case 0:
+				break;
+			}
+			
+		}while(flag != 0);
+		
+		
+	}
+}
